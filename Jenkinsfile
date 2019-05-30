@@ -6,19 +6,23 @@ pipeline {
     stages {
 	    stage('Initialize Stage') {
             steps {
-				echo 'Initialize Stage...'
+				echo 'INITIALIZE Stage...'
+				echo 'MAVEN_HOME = ${MAVEN_HOME}'
+				sh 'mvn clean'
             }
         }
-        stage('Compile Stage') {
+        stage('Build Stage') {
             steps {
-				echo 'Compile Stage...'
-				sh 'mvn clean compile'
+				echo 'BUILD Stage...'
+				sh 'mvn validate'
+				sh 'mvn compile'
+				sh 'mvn test'
+				sh 'mvn package'
             }
         }
         stage('Testing Stage') {
             steps {
-				echo 'Testing Stage...'
-				sh 'mvn test'
+				echo 'TESTING Stage...'
             }
         }
     }
